@@ -1,3 +1,5 @@
+import { ToastContainer } from 'react-toastify';
+
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -18,6 +20,9 @@ function App() {
         <Container>
           <Header />
           <Routes />
+          <ToastContainer
+            newestOnTop
+          />
         </Container>
       </ThemeProvider>
     </BrowserRouter>

@@ -1,19 +1,24 @@
 import Pageheader from '../../components/PageHeader';
 import ProductForm from '../../components/ProductForm';
 import ProductsServices from '../../services/ProductsServices';
+import { sucess, error } from '../../components/Toasts';
 
 export default function NewProduct() {
   async function handleSubmit(formData) {
-    const product = {
-      product_name: formData.name,
-      quantity: formData.quantity,
-      price: formData.price,
-      category_id: formData.categoryId,
-    };
+    try {
+      const product = {
+        product_name: formData.name,
+        quantity: formData.quantity,
+        price: formData.price,
+        category_id: formData.categoryId,
+      };
 
-    const response = await ProductsServices.createProducts(product);
+      await ProductsServices.createProducts(product);
 
-    console.log(response);
+      sucess('Adicionado com Sucesso');
+    } catch {
+      error('Erro ao adicionar');
+    }
   }
 
   return (

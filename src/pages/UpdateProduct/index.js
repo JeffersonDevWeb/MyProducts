@@ -5,7 +5,7 @@ import Pageheader from '../../components/PageHeader';
 import ProductForm from '../../components/ProductForm';
 import Loader from '../../components/Loader';
 import ProductsServices from '../../services/ProductsServices';
-import { showToast } from '../../utils/showToast';
+import { error, sucess } from '../../components/Toasts';
 
 export default function UpdateProduct() {
   const { id } = useParams();
@@ -22,10 +22,8 @@ export default function UpdateProduct() {
         setIsLoading(false);
       } catch {
         history.push('/');
-        showToast({
-          type: 'danger',
-          text: 'Contato não encontrado!',
-        });
+
+        error('Erro ao acessar');
       }
     }
 
@@ -33,16 +31,20 @@ export default function UpdateProduct() {
   }, [id, history]);
 
   async function handleSubmit(formData) {
-    const newProduct = {
-      product_name: formData.name,
-      quantity: formData.quantity,
-      price: formData.price,
-      category_id: formData.categoryId,
-    };
+    try {
+      const newProduct = {
+        product_name: formData.name,
+        quantity: formData.quantity,
+        price: formData.price,
+        category_id: formData.categoryId,
+      };
 
-    const response = await ProductsServices.editProducts(id, newProduct);
+      await ProductsServices.editProducts(id, newProduct);
 
-    console.log(response);
+      sucess('Alterado com sucesso');
+    } catch {
+      error('Erro ao alterar');
+    }
   }
 
   return (
