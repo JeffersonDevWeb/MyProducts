@@ -17,5 +17,9 @@ export const Container = styled.div`
       position: absolute;
       top: 10%;
       right: 4%;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 `;
