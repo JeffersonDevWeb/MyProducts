@@ -1,12 +1,14 @@
 import HttpClient from './utils/HttpClient';
 
+import api from '../contexts/utils/api';
+
 class CategoriesService {
   constructor() {
-    this.HttpClient = new HttpClient('https://restapi-myproducts.herokuapp.com');
+    this.HttpClient = new HttpClient('http://localhost:3001');
   }
 
   async listCategories() {
-    return this.HttpClient.get('/categories');
+    return (await api.get('/categories')).data;
   }
 }
 

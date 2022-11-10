@@ -2,6 +2,15 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   margin-top: 32px;
+
+  .logout {
+    position: absolute;
+    background: transparent;
+    border: none;
+    top: 3%;
+    right: 5%;
+    color: antiquewhite;
+  }
 `;
 
 export const InputSearchContainer = styled.div`

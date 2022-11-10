@@ -8,7 +8,7 @@ import { Container } from './styles';
 export default function Pageheader({ title }) {
   return (
     <Container>
-      <Link to="/">
+      <Link to="/home">
         <img src={arrow} alt="Voltar" />
         <span>Voltar</span>
       </Link>

@@ -1,16 +1,18 @@
 import { Link } from 'react-router-dom';
 
 import {
-  useEffect, useState, useMemo, useCallback,
+  useEffect, useState, useMemo, useCallback, useContext,
 } from 'react';
 import {
   Container, InputSearchContainer, Header, ListHeader, Card, ErrorContainer,
 } from './styles';
+import { Context } from '../../contexts/AuthContext';
 
 import arrow from '../../assets/images/icons/arrow.svg';
 import update from '../../assets/images/icons/update.svg';
 import trash from '../../assets/images/icons/delete.svg';
 import sad from '../../assets/images/icons/sadFace.svg';
+import logout from '../../assets/images/icons/logout.svg';
 
 import Loader from '../../components/Loader';
 import Button from '../../components/Button';
@@ -47,6 +49,8 @@ export default function Home() {
     loadProducts();
   }, [loadProducts]);
 
+  const { handleLogout } = useContext(Context);
+
   function handleOrderBy() {
     setOrderBy(
       (prevState) => (prevState === 'asc' ? 'desc' : 'asc'),
@@ -81,6 +85,10 @@ export default function Home() {
 
   return (
     <Container>
+      <button type="button" onClick={handleLogout} className="logout">
+        <img src={logout} alt="sair" />
+      </button>
+
       <Loader isLoading={isLoading} />
 
       <InputSearchContainer>
@@ -160,6 +168,7 @@ export default function Home() {
                 </button>
               </div>
             </Card>
+
           ))}
         </>
       )}

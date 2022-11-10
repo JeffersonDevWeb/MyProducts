@@ -1,32 +1,34 @@
 import HttpClient from './utils/HttpClient';
 
+import api from '../contexts/utils/api';
+
 class ProductsService {
   constructor() {
-    this.HttpClient = new HttpClient('https://restapi-myproducts.herokuapp.com');
+    this.HttpClient = new HttpClient('https://api-myproducts.herokuapp.com/');
   }
 
   async listProducts(orderBy = 'asc') {
-    return this.HttpClient.get(`/products?orderBy=${orderBy}`);
+    return (await api.get(`/products?orderBy=${orderBy}`)).data;
   }
 
   async createProducts(product) {
-    return this.HttpClient.post('/products', { body: product });
+    return api.post('/products', product);
   }
 
   async getProductById(id) {
-    return this.HttpClient.get(`/products/${id}`);
+    return (await api.get(`/products/${id}`)).data;
   }
 
   async deleteProducts(id) {
-    return this.HttpClient.delete(`/products/${id}`);
+    return (await api.delete(`/products/${id}`)).data;
   }
 
   async editProducts(id, product) {
-    return this.HttpClient.put(`/products/${id}`, { body: product });
+    return api.put(`/products/${id}`, product);
   }
 
   async buyProducts(id, product) {
-    return this.HttpClient.patch(`/products/${id}`, { body: product });
+    return api.patch(`/products/${id}`, product);
   }
 }
 

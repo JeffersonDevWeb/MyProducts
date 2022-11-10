@@ -4,6 +4,7 @@ export const Container = styled.div`
   & + & {
     margin-top: 16px;
   }
+  position: relative;
 
   small {
     color: ${({ theme }) => theme.colors.danger.main};
@@ -11,4 +12,10 @@ export const Container = styled.div`
     display: block;
     margin-top: 8px;
   }
+
+    img {
+      position: absolute;
+      top: 10%;
+      right: 4%;
+    }
 `;
