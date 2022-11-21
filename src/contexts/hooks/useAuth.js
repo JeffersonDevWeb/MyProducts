@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import api from '../utils/api';
 import history from '../utils/history';
+import { error } from '../../components/Toasts';
 
 // import delay from '../../utils/delay';
 
@@ -21,16 +22,19 @@ export default function useAuth() {
   }, []);
 
   async function handleLogin(emailArg, passwordArg) {
-    const { data } = await api.post('/authenticate', {
-      email: emailArg,
-      password: passwordArg,
-    });
+    try {
+      const { data } = await api.post('/authenticate', {
+        email: emailArg,
+        password: passwordArg,
+      });
 
-    localStorage.setItem('token', JSON.stringify(data.token));
-    api.defaults.headers.Authorization = `Bearer ${data.token}`;
-    setAuthenticated(true);
-    history.push('/home');
-
+      localStorage.setItem('token', JSON.stringify(data.token));
+      api.defaults.headers.Authorization = `Bearer ${data.token}`;
+      setAuthenticated(true);
+      history.push('/home');
+    } catch {
+      return error('E-mail e/ou Senha Inválidos, tente novamente.');
+    }
     return 'Acessou';
   }
 

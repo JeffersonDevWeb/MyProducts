@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { ButtonContainer, RegisterContainer } from '../styles';
 
 import { Context } from '../../../contexts/AuthContext';
+import isEmailValid from '../../../utils/isEmailValid';
+import useErrors from '../../../hooks/useErrors';
 
 import FormGroup from '../../../components/FormGroup';
 import Input from '../../../components/Input';
@@ -19,9 +21,34 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [passwordShow, setPasswordShow] = useState(false);
 
+  const {
+    errors,
+    setError,
+    removeError,
+    getErrorMessageByFieldName,
+  } = useErrors();
+
   function handleEmailChange(event) {
     setEmail(event.target.value.toLowerCase());
+
+    if (!event.target.value || !isEmailValid(event.target.value)) {
+      const ErrorExists = errors.find((error) => error.field === 'email');
+
+      if (ErrorExists) {
+        return;
+      }
+
+      console.log(errors);
+
+      setError({
+        field: 'email',
+        message: 'Insira um e-mail Válido',
+      });
+    } else {
+      removeError('email');
+    }
   }
+
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
@@ -36,11 +63,12 @@ const SignIn = () => {
   return (
     <>
       <form>
-        <FormGroup>
+        <FormGroup error={getErrorMessageByFieldName('email')}>
           <Input
             type="email"
             value={email}
             onChange={handleEmailChange}
+            error={getErrorMessageByFieldName('email')}
             placeholder="E-mail *"
             required
           />
