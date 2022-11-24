@@ -39,8 +39,6 @@ const SignIn = () => {
         return;
       }
 
-      console.log(errors);
-
       setError({
         field: 'email',
         message: 'Insira um e-mail Válido',

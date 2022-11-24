@@ -22,8 +22,6 @@ export default function Modal({
     return null;
   }
 
-  console.log(product);
-
   const [quantity, setQuantity] = useState('');
 
   const {
