@@ -21,15 +21,38 @@ export const Container = styled.div`
   padding: 24px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
 
-  h1 {
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    h1 {
     font-size: 22px;
-    color: ${({ theme, danger }) => (
-    danger ? theme.colors.danger.main : theme.colors.gray[900]
-  )}
+    color: ${({ theme }) => (theme.colors.danger.main)}
+  }
+
+    button {
+      border: 0;
+      background: transparent;
+      line-height: 0;
+    }
   }
 
   p {
-    margin-top: 8px;
+    margin-bottom: 12px;
+  }
+
+  input:focus {
+    border-color: ${({ theme }) => (theme.colors.danger.main)};
+  }
+
+  .delete-Button {
+    background-color: ${({ theme }) => (theme.colors.danger.main)};
+
+    &:hover {
+      background-color: ${({ theme }) => (theme.colors.danger.dark)};
+    }
   }
 `;
 

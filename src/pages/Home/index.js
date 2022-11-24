@@ -16,6 +16,7 @@ import logout from '../../assets/images/icons/logout.svg';
 
 import Loader from '../../components/Loader';
 import Button from '../../components/Button';
+import Modal from '../../components/Modal/index';
 
 import ProductsServices from '../../services/ProductsServices';
 
@@ -25,6 +26,8 @@ export default function Home() {
   const [searchField, setSearchField] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
 
   const filteredProducts = useMemo(() => products.filter((product) => (
     product.product_name.toLowerCase().includes(searchField.toLocaleLowerCase())
@@ -51,6 +54,16 @@ export default function Home() {
 
   const { handleLogout } = useContext(Context);
 
+  function handleOpenModal(product) {
+    setIsModalVisible(true);
+    setSelectedProduct(product);
+  }
+  function handleCloseModal() {
+    setIsModalVisible(false);
+    setSelectedProduct(null);
+    loadProducts();
+  }
+
   function handleOrderBy() {
     setOrderBy(
       (prevState) => (prevState === 'asc' ? 'desc' : 'asc'),
@@ -64,7 +77,7 @@ export default function Home() {
   async function handleDelete(id, product) {
     const quantity = Number(product.quantity);
 
-    if (quantity === 1) {
+    if (quantity <= 1) {
       ProductsServices.deleteProducts(id);
     }
 
@@ -85,6 +98,12 @@ export default function Home() {
 
   return (
     <Container>
+      <Modal
+        visible={isModalVisible}
+        product={selectedProduct}
+        onClose={handleCloseModal}
+      />
+
       <button type="button" onClick={handleLogout} className="logout">
         <img src={logout} alt="sair" />
       </button>
@@ -163,7 +182,7 @@ export default function Home() {
                   <img src={update} alt="Atualizar" />
                 </Link>
 
-                <button type="button" onClick={() => handleDelete(product.id, product)}>
+                <button type="button" onClick={product.quantity > 10 ? () => handleOpenModal(product) : () => handleDelete(product.id, product)}>
                   <img src={trash} alt="Delete" />
                 </button>
               </div>

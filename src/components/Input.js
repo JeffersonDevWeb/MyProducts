@@ -11,7 +11,7 @@ export default styled.input`
   outline: none;
   padding: 0 16px;
   font-size: 16px;
-  transition: all 0.2s;
+  transition: all 0.1s;
 
   &:focus{
     border: 2px solid ${({ theme }) => theme.colors.primary.main}
