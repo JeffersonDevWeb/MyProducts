@@ -86,9 +86,9 @@ export default function Modal({
             type="number"
             error={getErrorMessageByFieldName('quantity')}
             value={quantity}
-            placeholder="Quantidade de itens à remover *"
+            placeholder={product.quantity}
             onChange={handleQuantityChange}
-            max="10"
+            max={product.quantity}
             min="1"
           />
         </FormGroup>
