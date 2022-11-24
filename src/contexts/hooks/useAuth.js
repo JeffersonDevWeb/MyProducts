@@ -23,6 +23,8 @@ export default function useAuth() {
 
   async function handleLogin(emailArg, passwordArg) {
     try {
+      setIsLoading(true);
+
       const { data } = await api.post('/authenticate', {
         email: emailArg,
         password: passwordArg,
@@ -33,9 +35,11 @@ export default function useAuth() {
       setAuthenticated(true);
       history.push('/home');
     } catch {
+      setIsLoading(false);
       return error('E-mail e/ou Senha Inválidos, tente novamente.');
     }
-    return 'Acessou';
+    setIsLoading(false);
+    return ('acessou');
   }
 
   function handleLogout() {

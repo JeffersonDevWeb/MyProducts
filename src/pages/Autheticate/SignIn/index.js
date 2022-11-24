@@ -12,6 +12,7 @@ import useErrors from '../../../hooks/useErrors';
 import FormGroup from '../../../components/FormGroup';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+import Loader from '../../../components/Loader';
 
 import visibilityOn from '../../../assets/images/icons/VisibilityOn.svg';
 import visibilityOff from '../../../assets/images/icons/VisibilityOff.svg';
@@ -58,10 +59,12 @@ const SignIn = () => {
   }
 
   // eslint-disable-next-line consistent-return
-  const { handleLogin } = useContext(Context);
+  const { handleLogin, isLoading } = useContext(Context);
 
   return (
     <>
+      <Loader isLoading={isLoading} />
+
       <form>
         <FormGroup error={getErrorMessageByFieldName('email')}>
           <Input
