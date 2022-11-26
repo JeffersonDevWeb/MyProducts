@@ -1,22 +1,22 @@
 import { Link } from 'react-router-dom';
 
 import {
-  useEffect, useState, useMemo, useCallback, useContext,
+  useEffect, useState, useMemo, useCallback,
 } from 'react';
 import {
   Container, InputSearchContainer, Header, ListHeader, Card, ErrorContainer,
 } from './styles';
-import { Context } from '../../contexts/AuthContext';
 
+import profile from '../../assets/images/icons/profile.svg';
 import arrow from '../../assets/images/icons/arrow.svg';
 import update from '../../assets/images/icons/update.svg';
 import trash from '../../assets/images/icons/delete.svg';
 import sad from '../../assets/images/icons/sadFace.svg';
-import logout from '../../assets/images/icons/logout.svg';
 
 import Loader from '../../components/Loader';
 import Button from '../../components/Button';
 import Modal from '../../components/Modal/index';
+import Menu from '../../components/Menu/index';
 
 import ProductsServices from '../../services/ProductsServices';
 
@@ -27,6 +27,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
 
   const filteredProducts = useMemo(() => products.filter((product) => (
@@ -52,8 +53,6 @@ export default function Home() {
     loadProducts();
   }, [loadProducts]);
 
-  const { handleLogout } = useContext(Context);
-
   function handleOpenModal(product) {
     setIsModalVisible(true);
     setSelectedProduct(product);
@@ -62,6 +61,13 @@ export default function Home() {
     setIsModalVisible(false);
     setSelectedProduct(null);
     loadProducts();
+  }
+
+  function handleOpenMenu() {
+    setIsMenuOpen(true);
+  }
+  function handleCloseMenu() {
+    setIsMenuOpen(false);
   }
 
   function handleOrderBy() {
@@ -104,8 +110,13 @@ export default function Home() {
         onClose={handleCloseModal}
       />
 
-      <button type="button" onClick={handleLogout} className="logout">
-        <img src={logout} alt="sair" />
+      <Menu
+        visible={isMenuOpen}
+        onClose={handleCloseMenu}
+      />
+
+      <button type="button" onClick={handleOpenMenu} className="logout">
+        <img src={profile} alt="Perfil" />
       </button>
 
       <Loader isLoading={isLoading} />
