@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'https://web-production-4037.up.railway.app/',
 });
