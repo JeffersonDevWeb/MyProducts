@@ -1,12 +1,6 @@
-import HttpClient from './utils/HttpClient';
-
 import api from '../contexts/utils/api';
 
 class ProductsService {
-  constructor() {
-    this.HttpClient = new HttpClient('https://api-myproducts.herokuapp.com/');
-  }
-
   async listProducts(orderBy = 'asc') {
     return (await api.get(`/products?orderBy=${orderBy}`)).data;
   }
@@ -17,6 +11,10 @@ class ProductsService {
 
   async getProductById(id) {
     return (await api.get(`/products/${id}`)).data;
+  }
+
+  async getProductByUserId(id, orderBy = 'asc') {
+    return (await api.get(`/profile/${id}?orderBy=${orderBy}`)).data;
   }
 
   async deleteProducts(id) {

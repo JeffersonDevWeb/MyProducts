@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import {
-  useEffect, useState, useMemo, useCallback,
+  useEffect, useState, useMemo, useCallback, useContext,
 } from 'react';
 import {
   Container, InputSearchContainer, Header, ListHeader, Card, ErrorContainer,
@@ -13,10 +13,13 @@ import update from '../../assets/images/icons/update.svg';
 import trash from '../../assets/images/icons/delete.svg';
 import sad from '../../assets/images/icons/sadFace.svg';
 
+import { Context } from '../../contexts/AuthContext';
+
 import Loader from '../../components/Loader';
+import Menu from '../../components/Menu/index';
 import Button from '../../components/Button';
 import Modal from '../../components/Modal/index';
-import Menu from '../../components/Menu/index';
+import Pageheader from '../../components/PageHeader';
 
 import ProductsServices from '../../services/ProductsServices';
 
@@ -30,6 +33,8 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
 
+  const { userId } = useContext(Context);
+
   const filteredProducts = useMemo(() => products.filter((product) => (
     product.product_name.toLowerCase().includes(searchField.toLocaleLowerCase())
   )), [products, searchField]);
@@ -38,7 +43,7 @@ export default function Home() {
     try {
       setIsLoading(true);
 
-      const productsList = await ProductsServices.listProducts(orderBy);
+      const productsList = await ProductsServices.getProductByUserId(userId, orderBy);
 
       setHasError(false);
       setProducts(productsList);
@@ -93,7 +98,6 @@ export default function Home() {
     };
 
     const response = await ProductsServices.buyProducts(id, buyProduct);
-
     if (!response) {
       console.log('alright');
     }
@@ -107,6 +111,10 @@ export default function Home() {
 
   return (
     <Container>
+      <Pageheader
+        title="Meus Produtos"
+      />
+
       <Modal
         visible={isModalVisible}
         product={selectedProduct}
@@ -188,11 +196,6 @@ export default function Home() {
                   Em estoque:
                   {' '}
                   {product.quantity}
-                </span>
-                <span>
-                  Adicionado por
-                  {' '}
-                  {product.username}
                 </span>
               </div>
 

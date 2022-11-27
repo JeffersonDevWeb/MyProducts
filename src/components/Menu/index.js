@@ -3,6 +3,7 @@
 import { useContext } from 'react';
 import propTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 
 import { Context } from '../../contexts/AuthContext';
 import { Overlay, Container } from './styles';
@@ -16,7 +17,7 @@ export default function Modal({
   if (!visible) {
     return null;
   }
-  const { handleLogout } = useContext(Context);
+  const { handleLogout, userId } = useContext(Context);
 
   return ReactDOM.createPortal(
     <Overlay>
@@ -29,9 +30,9 @@ export default function Modal({
           </button>
         </header>
 
-        <button type="button" className="menu-options">
-          MEUS PRODUTOS
-        </button>
+        <Link to={`/profile/${userId}`} className="menu-options">
+          <p>MEUS PRODUTOS</p>
+        </Link>
 
         <button type="button" onClick={handleLogout} className="menu-options">
           SAIR

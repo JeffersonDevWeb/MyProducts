@@ -1,16 +1,12 @@
-import HttpClient from './utils/HttpClient';
+import api from '../contexts/utils/api';
 
 class ClientsServices {
-  constructor() {
-    this.HttpClient = new HttpClient('http://localhost:3001');
-  }
-
-  async listClients(orderBy = 'asc') {
-    return this.HttpClient.get(`/Clients?orderBy=${orderBy}`);
+  async listUserById(id) {
+    return (await api.get(`/users/${id}`)).data;
   }
 
   async createClient(user) {
-    return this.HttpClient.post('/users', { body: user });
+    return api.post('/users', user);
   }
 }
 

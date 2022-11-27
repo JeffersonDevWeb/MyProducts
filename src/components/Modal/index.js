@@ -25,13 +25,10 @@ export default function Modal({
   const [quantity, setQuantity] = useState('');
 
   const {
-    errors,
     setError,
     removeError,
     getErrorMessageByFieldName,
   } = useErrors();
-
-  console.log(errors);
 
   function handleQuantityChange(event) {
     setQuantity(event.target.value);
@@ -51,7 +48,12 @@ export default function Modal({
       return error('Quantidade Invalida');
     }
 
+    if (Actualquantity === Number(quantity)) {
+      ProductsServices.deleteProducts(id);
+    }
+
     const buyed = Actualquantity - quantity;
+
     const buyProduct = {
       quantity: String(buyed),
     };

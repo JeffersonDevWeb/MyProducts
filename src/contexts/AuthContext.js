@@ -7,13 +7,13 @@ const Context = createContext();
 // eslint-disable-next-line react/prop-types
 function AuthProvider({ children }) {
   const {
-    authenticated, isLoading, handleLogin, handleLogout,
+    authenticated, userId, isLoading, handleLogin, handleLogout,
   } = useAuth();
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <Context.Provider value={{
-      isLoading, authenticated, handleLogin, handleLogout,
+      isLoading, authenticated, handleLogin, handleLogout, userId,
     }}
     >
       {children}

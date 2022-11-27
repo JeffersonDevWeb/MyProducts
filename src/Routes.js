@@ -15,6 +15,7 @@ import signUp from './pages/Autheticate/SignUp';
 import Home from './pages/Home';
 import NewProduct from './pages/NewProduct';
 import UpdateProduct from './pages/UpdateProduct';
+import profile from './pages/profile';
 
 function CustomRoute({ isPrivate, ...rest }) {
   const { isLoading, authenticated } = useContext(Context);
@@ -38,6 +39,7 @@ export default function Routes() {
       <CustomRoute isPrivate path="/home" component={Home} />
       <CustomRoute isPrivate path="/new" component={NewProduct} />
       <CustomRoute isPrivate path="/edit/:id" component={UpdateProduct} />
+      <CustomRoute isPrivate path="/profile/:id" component={profile} />
     </Switch>
   );
 }

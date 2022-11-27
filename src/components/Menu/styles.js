@@ -51,42 +51,22 @@ export const Container = styled.div`
     background: transparent;
     line-height: 0;
     padding: 0px 8px;
+    text-decoration: none;
+    color: black;
+
+    p {
+      font-size: 14px;
+    }
 
     &:hover {
       background-color: ${({ theme }) => (theme.colors.gray[100])};
       color: white;
       font-weight: bold;
     }
-  }
 
-  p {
-    margin-bottom: 12px;
-  }
-
-  input:focus {
-    border-color: ${({ theme }) => (theme.colors.danger.main)};
-  }
-
-  .delete-Button {
-    background-color: ${({ theme }) => (theme.colors.danger.main)};
-
-    &:hover {
-      background-color: ${({ theme }) => (theme.colors.danger.dark)};
+    .menu-link {
+      text-decoration: none;
+      color: black;
     }
-  }
-`;
-
-export const Footer = styled.footer`
-  margin-top: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-  .cancel-Button {
-    background: transparent;
-    border: none;
-    font-size: 16px;
-    margin-right: 8px;
-    color: ${({ theme }) => theme.colors.gray[200]};
   }
 `;

@@ -8,6 +8,7 @@ import { error } from '../../components/Toasts';
 
 export default function useAuth() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [userId, setUserId] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function useAuth() {
         password: passwordArg,
       });
 
+      setUserId(data.user[0].id);
       localStorage.setItem('token', JSON.stringify(data.token));
       api.defaults.headers.Authorization = `Bearer ${data.token}`;
       setAuthenticated(true);
@@ -43,6 +45,7 @@ export default function useAuth() {
   }
 
   function handleLogout() {
+    setUserId('');
     setAuthenticated(false);
     localStorage.removeItem('token');
     api.defaults.headers.Authorization = undefined;
@@ -50,6 +53,6 @@ export default function useAuth() {
   }
 
   return {
-    authenticated, isLoading, handleLogin, handleLogout,
+    authenticated, userId, isLoading, handleLogin, handleLogout,
   };
 }
